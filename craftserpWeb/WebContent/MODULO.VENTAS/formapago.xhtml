@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no" />
+		<title>Forma de Pago</title>
+	</f:facet>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form id="form1">
+		<p:panel header="Registro de nueva forma de pago">
+			<p:panelGrid columns="2">
+				<h:outputText value="Ingrese el nombre : " />
+				<p:inputText value="#{beanFormapago.formapago.nombre}" />
+				<p:commandButton value="Insertar" icon="pi ṕi-save"
+					update="@form,:form2"
+					actionListener="#{beanFormapago.actionListenerInsertarFormapago()}"></p:commandButton>
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+	<br />
+	<h:form id="form2">
+		<p:panel header="Datos Forma de Pago">
+			<p:dataTable value="#{beanFormapago.listaformapago}" reflow="true"
+				var="formapago" paginator="true" rows="5">
+
+				<p:column headerText="ID">
+					<h:outputText value="#{formapago.idFormaPago}" />
+				</p:column>
+
+				<p:column headerText="FORMA DE PAGO">
+					<h:outputText value="#{formapago.nombre}" />
+				</p:column>
+				<p:column headerText="OPCIONES" priority="1">
+					<p:commandButton icon="pi pi-pencil" value="Editar" style="width:100px" 
+						actionListener="#{beanFormapago.actionListenerSeleccionarFormapago(formapago)}"
+						update="formEdicion" oncomplete="PF('dlgEdicion').show();">
+					</p:commandButton>
+					<p:separator />
+					<p:commandButton icon="pi pi-times" value="Eliminar" style="width:100px" 
+						 update="@form"
+						actionListener="#{beanFormapago.actionELiminarFormaPago(formapago.idFormaPago)}">
+						<p:confirm header="Confirmacióń"
+							message="¿Seguro que desea eliminar?"
+							icon="pi pi-exclamation-triangle"></p:confirm>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	<p:dialog header="Editar Información" widgetVar="dlgEdicion"
+		modal="true">
+		<h:form id="formEdicion">
+			<p:growl>
+				<p:autoUpdate />
+			</p:growl>
+
+			<p:panelGrid columns="2">
+	
+				<h:outputText value="Nombre:" />
+				<p:inputText value="#{beanFormapago.pagoseleccionado.nombre}" />
+			</p:panelGrid>
+			<p:commandButton value="Actualizar" icon="pi pi-refresh"
+				update="@form,:form2"
+				actionListener="#{beanFormapago.actionListenerActualizarFormapago()}" />
+		</h:form>
+	</p:dialog>
+	<p:confirmDialog global="true" showEffect="fade">
+		<p:commandButton value="SI" type="button"
+			styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+		<p:commandButton value="NO" type="button"
+			styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+	</p:confirmDialog>
+</body>
+</html>

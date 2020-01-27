@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no" />
+		<title>Manejo de datos Ciudades</title>
+	</f:facet>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:panel header="Registro de nueva ciudad">
+			<p:panelGrid columns="2">
+				<h:outputText value="Ingrese el id : " />
+				<p:inputText value="#{beanCiudad.ciudad.idCiudad}" />
+				<h:outputText value="Ingrese el nombre : " />
+				<p:inputText value="#{beanCiudad.ciudad.nombre}" />
+				<p:commandButton value="Insertar" icon="fa fa-save" update="@form"
+					actionListener="#{beanCiudad.actionListenerInsertarCiudad()}"></p:commandButton>
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+	<br />
+	<h:form>
+		<p:panel header="Datos Ciudades">
+			<p:dataTable value="#{beanCiudad.listaCiudad}" reflow="true"
+				var="ciudad" paginator="true" rows="5">
+
+				<p:column headerText="Id">
+					<h:outputText value="#{ciudad.idCiudad}" />
+				</p:column>
+
+				<p:column headerText="ciudad">
+					<h:outputText value="#{ciudad.nombre}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+
+</body>
+</html>
